@@ -1,5 +1,7 @@
 #include <Servo.h>
 
+#include "FastLED.h"
+
 void setup() {
   // put your setup code here, to run once:
 
