@@ -1,12 +1,22 @@
 #include <Servo.h>
 
 #include "FastLED.h"
+#include "dcmotor.h"
+
 #define NUM_LEDS 10
 #define DATA_PIN 6
+
 CRGB leds[NUM_LEDS];
+
+DCMotor leftWheel;
+DCMotor rightWheel;
+
 void setup() {
   // put your setup code here, to run once:
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+
+  leftWheel.attach(2, 3, 9);
+  rightWheel.attach(4, 5, 10);
 }
 
 void loop() {
