@@ -28,5 +28,4 @@ void loop() {
     leds[dot] = CRGB::Black;
     delay(30);
   }
-
 }
