@@ -11,9 +11,10 @@ CRGB leds[NUM_LEDS];
 DCMotor leftWheel;
 DCMotor rightWheel;
 
-int inputPin = 2; // choose the input pin (for PIR sensor)
+int inputPin = 11; // choose the input pin (for PIR sensor)
 int pirState = LOW; // we start, assuming no motion detected
 int val = 0; // variable for reading the pin status
+int dot = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -36,15 +37,17 @@ void loop() {
 
   if (val == HIGH) { // check if the input is HIGH
     //Serial.println("HIGH");
+    
+     leds[dot] = CRGB(255, 0, 255);
+     FastLED.show();
+        // clear this led for the next time around the loop
+     leds[dot] = CRGB::Black;
+      delay(20);
+      dot++;
+      if (dot >= NUM_LEDS)
+        dot = 0;
     if (pirState == LOW) {
       Serial.println("Motion detected!");
-      for (int dot = 0; dot < NUM_LEDS; dot++) {
-        leds[dot] = CRGB(255, 0, 255);
-        FastLED.show();
-        // clear this led for the next time around the loop
-        leds[dot] = CRGB::Black;
-        delay(20);
-      }
       pirState = HIGH;
     }
   } else {
