@@ -35,16 +35,16 @@ void loop() {
     if (Serial.available>0){
         command = Serial.readStringUntil('\n');
         
-    if (command.startsWith("moveForwardPower")){
-        inputInt = command.substring(17).toInt;
-        inputLong = Serial.parseInt();
-    
-        leftWheel.start(inputInt);
-        rightWheel.start(inputInt);
-        delay(inputLong);
-        leftWheel.stop();
-        rightWheel.stop();
-    }
+        if (command.startsWith("moveForwardPower")){
+            inputInt = command.substring(17).toInt;
+            inputLong = Serial.parseInt();
+            
+            leftWheel.start(inputInt);
+            rightWheel.start(inputInt);
+            delay(inputLong);
+            leftWheel.stop();
+            rightWheel.stop();
+        }
     }
   //Serial.println("Enter loop");
   // put your main code here, to run repeatedly:
