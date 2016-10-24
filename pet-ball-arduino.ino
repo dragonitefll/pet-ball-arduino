@@ -15,7 +15,8 @@ int inputPin = 11; // choose the input pin (for PIR sensor)
 int pirState = LOW; // we start, assuming no motion detected
 int val = 0; // variable for reading the pin status
 int dot = 0;
-
+int inputInt = 0; //int for serial input
+long inputLong = 0;//same
 void setup() {
   // put your setup code here, to run once:
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
@@ -29,8 +30,20 @@ void setup() {
   Serial.begin(9600);
 
 }
-
+String command = "";
 void loop() {
+    if (Serial.available>0){
+        command = Serial.readStringUntil('\n');
+        inputLong = Serial.parseInt();
+    }
+    if (command.startsWith("moveForwardPower")){
+        inputInt = command.substring(17).toInt;
+        leftWheel.start(inputInt);
+        rightWheel.start(inputInt);
+        delay(inputLong);
+        leftWheel.stop();
+        rightWheel.stop();
+    }
   //Serial.println("Enter loop");
   // put your main code here, to run repeatedly:
   val = digitalRead(inputPin); // read input value
@@ -58,4 +71,5 @@ void loop() {
       }
     }
     //Serial.println("exit loop");
+
 } 
