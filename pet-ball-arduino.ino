@@ -15,8 +15,8 @@ void setup() {
   // put your setup code here, to run once:
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 
-  leftWheel.attach(2, 3, 9);
-  rightWheel.attach(4, 5, 10);
+  leftWheel.attach(22, 23, 9);
+  rightWheel.attach(24, 25, 10);
 
   Serial.begin(9600);
 }
