@@ -47,7 +47,7 @@ void loop() {
       if (dir == false) {
         dot++;
         if (dot >= NUM_LEDS-1){
-          dir = true;
+          dot = 0; //dir = true;
         }
       } else {
         dot--;
