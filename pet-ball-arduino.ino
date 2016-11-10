@@ -16,6 +16,7 @@ int pirState = LOW; // we start, assuming no motion detected
 int val = 0; // variable for reading the pin status
 int dot = 0;
 boolean dir = false;
+int highdetected= 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -37,38 +38,40 @@ void loop() {
   val = digitalRead(inputPin); // read input value
   if (val == HIGH) { // check if the input is HIGH
     //Serial.println("HIGH");
-    
-    leds[dot] = CRGB(128, 212, 255);
-    FastLED.show();
-    // clear this led for the next time around the loop
-    leds[dot] = CRGB::Black;
-    delay(20);
-    
-    if (dir == false) {
-      dot++;
-      if (dot >= NUM_LEDS-1){
-        dot = 0; //dir = true;
+    highdetected++;
+    if (highdetected >= 200) {
+      leds[dot] = CRGB(128, 212, 255);
+      FastLED.show();
+      // clear this led for the next time around the loop
+      leds[dot] = CRGB::Black;
+      delay(20);
+      if (dir == false) {
+        dot++;
+        if (dot >= NUM_LEDS-1){
+          dot = 0; //dir = true;
+        }
+      } else {
+          dot--;
       }
-    } else {
-      dot--;
-    }
-    if (dot == 0){
-      dir = false;
-    }
-    if (pirState == LOW) {
-      Serial.println("Motion detected!");
-      pirState = HIGH;
+      if (dot == 0){
+        dir = false;
+      }
+      if (pirState == LOW) {
+        Serial.println("Motion detected!");
+        pirState = HIGH;
+      }
     }
   } else {
-      //Serial.println("LOW");
-      if (pirState == HIGH){
-        Serial.println("Motion ended!");
-        pirState = LOW;
-      }
+    highdetected = 0;
+    //Serial.println("LOW");
+    if (pirState == HIGH){
+       Serial.println("Motion ended!");
+       pirState = LOW;
     }
+  }
     //Serial.println("exit loop");
 
-     if (Serial.available() > 0) {
+  if (Serial.available() > 0) {
     int command = Serial.read();
     if (command == 1) {
       char args[3] = {0, 0, 0};
